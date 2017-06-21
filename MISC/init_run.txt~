@@ -1,0 +1,68 @@
+INIT RUN parameters
+Number cores required  -> [(Number of Groups) / (Number of Agents per Group)] * Number of matches
+or
+Number cores required % Cores available -> 0
+--------------
+
+Number of Evolutionary Generations    = 1
+Number of Evaluations                 = 1
+Number of Iterations                  = 1000
+
+Number of Groups in a Population      = 5
+Number of Agents per Group            = 4
+Are solutions diploid?  (Y or N)      = N
+Are groups heterogeneous? (Y or N)    = N
+Is selection individual? (Y or N)     = N
+Number Evolving populations           = 1 This has to be 1 for the time being 
+Number of matches                     = 1 This has to be smaller than the number of groups
+Number of Genotypes Truncated         = 0
+Number of Elite                       = 2
+Probability of Mutation               = 0.05
+Probability of Recombination          = 0.0
+
+Dump statistics every                 = 1
+Dump genome every                     = 1
+
+Choose dir name where to dump data    = ../DATA/
+Choose dir name where to dump genome  = ../GENOME/
+
+Choose type of evolutionary algorithm = roulette_wheel
+(Current Options: roulette_wheel )
+
+Choose type of control system         = pfsm
+(Current Options: ctrnn_three_layers - ctrnn_three_layers_hebb - simple_three_layers - perceptron - elman - ctrnn_fully_recurrent - pfsm)
+
+
+Robot World Characteristics
+-----------------------------------
+
+Simulation Time Step   = 0.13
+Number of bricks       = 1
+Number of cylinders    = 0
+Number of spheres      = 0
+
+Number of properties   = 16
+(you need to have at least 16 properties listed below)
+
+LIST OF PROPERTIES
+1)  x position:                                 = 0.0   / 0.0
+2)  y position:                                 = 0.0   / 0.0
+3)  z position:                                 = 0.0   / -0.15
+4)  length:                                     = 0.50  / 0.10
+5)  width:                                      = 0.05  / 0.10
+6)  height:                                     = 0.06  / 0.06
+7)  rotation on XZ plain                        = 0.0   / 0.0
+8)  colour R:                                   = 0.0   / 0.0
+9)  colour G:                                   = 1.0   / 1.0
+10) colour B:                                   = 0.0   / 0.0
+11) mass:                                       = 1.000 / 0.100
+12) restitution:                                = 0.0   / 0.0
+13) friction:                                   = 0.5   / 0.5
+14) rolling m_friction:                         = 0.0   / 0.0
+15) linear velocity damping:                    = 0.8   / 0.8
+16) angluar velocity damping:                   = 0.9   / 0.9
+
+-----------------------------------------------
+-	e n d   o f   p a r a m e t e r s         -
+-----------------------------------------------
+This is just a check at the end = 999

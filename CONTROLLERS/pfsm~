@@ -1,0 +1,16 @@
+Type of controller: 
+      Probabilistic Finite State Machine
+--------------------------------
+	
+Number of input node      	=  0
+Number of output node           =  4
+rho                             =  0.6
+rho equal to 1 zero turning angle - rho equal to 0 angle drawn from uniform distribution in [0, PI]
+forward_movement_lenght         = 40;
+
+
+-----------------------------------------------
+-	e n d   o f   p a r a m e t e r s         -
+-----------------------------------------------
+
+This is just a check at the end = 999

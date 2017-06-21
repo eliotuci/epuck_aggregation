@@ -1,0 +1,54 @@
+#ifndef _ROULETTE_WHEEL_
+#define _ROULETTE_WHEEL_
+
+#include "population.h"
+
+template<class T>
+struct ParentsInfo
+{
+  T mum_group;
+  T mum_ind;
+  T dad_group;
+  T dad_ind;
+};
+
+template<class T>
+ParentsInfo<T> MakeMumAndDad(T mum_gr, T mum_i, T dad_gr, T dad_i )
+{
+  ParentsInfo <T> ret;
+  ret.mum_group = mum_gr;
+  ret.mum_ind   = mum_i;
+  ret.dad_group = dad_gr;
+  ret.dad_ind   = dad_i;
+  return ret;
+}
+
+
+class Roulette_wheel : public Population { 
+
+ private:
+  vector <double> ProbSelection;
+  vector< vector < ParentsInfo <int> > > m_parents;
+  
+ public:
+  Roulette_wheel ( unsigned int id, const Parameters* params, const int nb_alleles, const int nb_bases_per_allele );
+  ~Roulette_wheel( );
+
+  void (Roulette_wheel::*breeding_fn_ptr)();
+  
+  void breeding                            ( void );
+  void proporational_fitness_selection     ( void );
+  void rank_based_selection                ( void );
+  void compute_probabilities_of_selection  ( void );
+
+  void breeding_HomoGroups                 ( void );
+  void breeding_HeteroGroups               ( void );
+
+  void select_groups                       ( int *mum, int *dad );
+  void copy_new_genotypes_in_working_array ( void );
+  void dumpStats                           ( void );
+  void dumpGenome                          ( void );
+  inline vector <double> getProbSelection  ( void ) const {return ProbSelection;}
+};
+
+#endif

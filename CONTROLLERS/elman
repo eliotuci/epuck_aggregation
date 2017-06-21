@@ -1,0 +1,16 @@
+Type of neural network controller: 
+      3 LAYERS CTRNN
+--------------------------------
+	
+Number of input node      	=  2
+Number of hidden node           =  4
+Number of output node           =  1
+
+Set low bound  Wts    = -10.0
+Set high bound Wts   =  10.0
+
+-----------------------------------------------
+-	e n d   o f   p a r a m e t e r s         -
+-----------------------------------------------
+
+This is just a check at the end = 999

@@ -1,0 +1,26 @@
+Type of neural network controller: 
+      3 LAYERS CTRNN
+--------------------------------
+	
+Freqeuncy of updates per second = 0.1	
+Number of input node      	=  2
+Number of output node           =  1
+Total number of  node           =  4
+
+Set low bound Wts          = -10.0
+Set high bound Wts         =  10.0
+
+Set low bound Tau          = -1.0
+Set high bound Tau         =  1.3
+
+Set low bound Bias         = -5.0
+Set high bound Bias        =  5.0
+
+Set low bound sensorsGain  = 1.0
+Set high bound sensorsGain = 13.0
+
+-----------------------------------------------
+-	e n d   o f   p a r a m e t e r s         -
+-----------------------------------------------
+
+This is just a check at the end = 999

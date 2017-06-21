@@ -1,0 +1,182 @@
+#include "pfsm.h"
+
+/* -------------------------------------------------------------------------------------- */
+
+void  Pfsm::read_from_file ( void ) { 
+  ifstream I ("../CONTROLLERS/pfsm");
+  if(!I) {
+    cerr << "File with PFSM init parameters not found" <<endl;
+    exit(0);
+  }
+  
+  // read parameters here
+  num_input               = getInt('=',I);
+  num_output              = getInt('=',I);
+  rho                     = getDouble   ('=', I);
+  forward_movement_lenght = getInt('=',I);
+  count_step_forward      = 0;
+  turning_lenght          = 0;
+  count_step_turn         = 0;
+  turning_angle_already_computed = false;
+  turning_clockwise              = false;
+  
+  int check = getInt('=',I);
+  I.close();
+  if( check != 999 ){
+    cerr << " In ../CONTROLLERS/pfsm specifications' file --- End check was not 999" << endl;
+    exit(0);
+  }
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::compute_genotype_length ( void ){
+  genotype_length = 0;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+Pfsm::Pfsm( )
+  : Controller()
+{
+  // read from file net structure
+  read_from_file ( );
+  
+  //Set genotyope length given net structure
+  compute_genotype_length();
+  
+  //Init. the input layers with connections
+  allocate( );
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+Pfsm::Pfsm( const Pfsm& other)
+{
+    allocate( );
+    copy(other);
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::copy(const Pfsm &other)
+{
+    Controller::copy(other);
+    rho                     = other.rho;
+    forward_movement_lenght = other.forward_movement_lenght;
+    count_step_forward      = other.count_step_forward;
+    turning_lenght          = other.turning_lenght;
+    count_step_turn         = other.count_step_turn;
+    turning_angle_already_computed = other.turning_angle_already_computed;
+    turning_clockwise       = other.turning_clockwise;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::allocate( )
+{
+
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::destroy()
+{
+  Controller::destroy();
+  
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+Pfsm::~Pfsm()
+{
+    destroy();
+}
+
+/* -------------------------------------------------------------------------------------- */
+void Pfsm::init ( const vector <chromosome_type> &genes )
+{
+
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::step ( const vector <double> &input, vector <double> &output){
+
+  if( count_step_forward < forward_movement_lenght ){
+    move_forward( input, output );
+    count_step_forward++;
+    turning_angle_already_computed = false;
+  }
+  else{
+    if( !turning_angle_already_computed ){
+      turning_lenght                 = random_turn_lenght( );
+      if( gsl_rng_uniform_pos(GSL_randon_generator::r_rand) > 0.5 )
+	turning_clockwise              = true;
+      else
+	turning_clockwise              = false;
+      turning_angle_already_computed = true;
+      count_step_turn                = 0;
+    }
+    
+    if( count_step_turn < turning_lenght ){
+      if( turning_clockwise ){
+	output[0] = 0.5;
+	output[1] = 0.0;
+	output[2] = 0.0;
+	output[3] = 0.5;
+      }
+      else{
+	output[0] = 0.0;
+	output[1] = 0.5;
+	output[2] = 0.5;
+	output[3] = 0.0;
+      }
+      count_step_turn++;
+    }
+    else{
+      count_step_forward = 0;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::reset ( void ){
+
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+Pfsm& Pfsm::operator=(const Pfsm &other)
+{
+  if(this != &other)
+    {
+      destroy();
+      allocate( );
+      copy(other);
+    }
+  return *this;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+int Pfsm::random_turn_lenght( void ){
+  //gsl_ran_cauchy(GSL_randon_generator::r_rand, 0.99) << endl;  
+  double c = ( (2.0 * rho) / (1.0 + (rho*rho)) );
+  double V = cos(gsl_rng_uniform_pos( GSL_randon_generator::r_rand )*TWO_PI);
+  double sigma = acos((V+c)/(1+(c*V)) ); //% [0, PI];
+  return  (int)(rint)(25.0 * sigma)/PI;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+void Pfsm::move_forward( const vector <double> &input, vector <double> &output ){
+  output[0] = 0.8;
+  output[1] = 0.0;
+  output[2] = 0.8;
+  output[3] = 0.0;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
