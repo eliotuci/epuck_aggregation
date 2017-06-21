@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage[left=1.0in,right=1.0in,top=1in,bottom=1in]{geometry}
+\usepackage{courier}
+\usepackage[colorlinks=true,
+            linkcolor=red,
+            urlcolor=blue,
+            citecolor=gray]{hyperref}
+\usepackage{cleveref}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+%\lstset{framextopmargin=50pt,frame=bottomline}
+\begin{document}
+
+\title{Installation of EVOSIM 3D Physics Simulation on Linux}
+\author{Muhanad Hayder, Elio Tuci\\
+Department of Computer Science, Aberystwyth University, Wales UK\\
+mhm1,elt7@aber.ac.uk}
+
+\date{03/01/2015}
+\maketitle
+
+
+\section{What is EVOSIM}
+EVOSIM is a 3D simulation integrated with Bullet physics engine used for running Evolutionary Robotics experiments. The simulation provides robot(s) and object(s) with dynamic physical properties. It uses \emph{OpenGL} for rendering objects and the \emph{Bullet physics engine} to simulate the dynamic properties of physical objects (i.e Forces, Torques and Frictions). There is also a parallelized version of EVOSIM which runs on the \emph{HPC} cluster written using \emph{MPI} library to speeding up experimentation. 
+
+The installation of EVOSIM required the following software to be installed on Linux operation system:
+\begin{itemize}
+\item \emph{C++} compiler and \emph{cmake} tools to compile and build the executable.
+\item \emph{OpenGL} for 3D rendering of objects in the environment.
+\item \emph{gsl} library for generating random numbers required by the Evolutionary algorithm.
+\item \emph{qt} library which provides a windowing system for the simulator.
+\item \emph{Bullet physics engine} for dynamic properties of the system.
+
+\end{itemize}
+\subsection{Installing C++ compiler and cmake tool}
+On a local machine running Linux operating system type the following commands on terminal to install \emph{g++, gcc} compilers and \emph{cmake} tools respectively:
+\begin{lstlisting}[language=bash]
+
+	sudo apt-get install g++
+	sudo apt-get install gcc
+	sudo apt-get install cmake
+  
+\end{lstlisting}
+
+\subsection{Installing OpenGL}
+Install \emph{OpenGl} library by typing the following command on terminal:
+\begin{lstlisting}[language=bash]
+
+	sudo apt-get install freeglut3-dev
+ 
+\end{lstlisting}
+This library is needed for rendering the simulation environment. The following \href{http://www.youtube.com/watch?v=wEJr3IUPk-c}{video} may be useful. A good starting tutorial on how to install OpenGL is on this \href{http://www.videotutorialsrock.com/index.php}{link}. Note that the \emph{makefile} has to include the following library \emph{LIBS = -lGLU -lGL -lglut}. The following \href{http://ubuntuforums.org/showthread.php?t=1879827}{link} may also be useful. However, this is already done for you in \emph{CMakeLists.txt}
+ 
+\subsection{Installing gsl}
+ \emph{gsl} library is used for generating random numbers. It is used by evolutionary algorithm of the simulator to initialize the genotype values. It is also used to randomly initialized robot and object position and orientation. To install \emph{gsl library} type the following command on terminal:
+  \begin{lstlisting}[language=bash]
+  
+  	sudo apt-get install libgsl0-dev
+    
+  \end{lstlisting}
+  
+\subsection{Installing \emph{qt}}
+\emph{qt} is a windowing library uses to create frame that hold \emph{openGL} rendering and creates buttons for interacting with the simulator (i.e running, stopping and loading genomes). To install \emph{qt} library type the following command on the terminal:
+  \begin{lstlisting}[language=bash]
+  
+  	sudo apt-get install libqt4-dev
+  	sudo apt-get install libqt4-core
+  	sudo apt-get install libqglviewer-dev
+  	sudo apt-get install libqwt-dev
+    
+  \end{lstlisting}
+
+\subsection{Installing \emph{Bullet} library}
+As mentioned earlier \emph{Bullet physics} library enable the simulator to consider the dynamics properties of every object in the environment. You need to go to the \emph{Bullet physics} \href{http://bulletphysics.org/wordpress/}{official website} to download the latest version of the library for linux.
+After downloading the source code uncompress it and navigate to build directory (or create one) and type the following command:
+\begin{lstlisting}[language=bash]
+  
+  	sudo cmake ..
+    
+  \end{lstlisting}
+The command will create the required make file for installation then type:
+\begin{lstlisting}[language=bash]
+  
+  	sudo make
+    
+  \end{lstlisting}
+Then the following libraries \emph{libBulletCollision.a, libBulletDynamics.a, libBulletSoftbody.a and libLinearMath.a} will be created within the directory \emph{bullet-2.82-r2704/build/src/}, copy these libraries to the directory \emph{/usr/lib/}, and copy bullet source code from the directory \emph{bullet-2.82-r2704/src/} in to the directory \emph{usr/include/bullet/} so that your compiler can find them or you need to tell the compiler if they are in different user directory.
+The following \href{https://www.youtube.com/watch?v=wbu5MdsFYko}{video} tutorial shows how to install \emph{Bullet physics engine} on both Widows and Linux. It may be useful to have a look at it. 
+Make sure these library are installed in proper directory as specified by the \emph{CMakelists.txt} file.
+
+\subsection{Installing \emph{EVOSIM} Simualtor}
+
+Now, all the required libraries are installed. Your system is ready to install and run EVOSIM simualtor and enjoy the evolutionary staff.
+Navigate to EVOSIM build directory and type the following command:
+\begin{lstlisting}[language=bash]  
+  	sudo cmake ..    
+  \end{lstlisting}  
+Then type:
+\begin{lstlisting}[language=bash]  
+  	sudo make    
+  \end{lstlisting}
+If every things goes right, you will be able to run EVOSIM in two mode:
+\begin{itemize}
+\item Evolutionary mode:
+\begin{lstlisting}[language=bash]  
+  	./EVOSIM -e -n run_name -s seed_number    
+  \end{lstlisting} 
+\item Viewing mode:
+\begin{lstlisting}[language=bash]  
+  	./EVOSIM -v    
+  \end{lstlisting}
+\end{itemize}
+
+ 
+\end{document}
